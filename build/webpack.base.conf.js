@@ -2,7 +2,7 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-
+var webpack = require('webpack')
 module.exports = {
   entry: {
     app: './src/main.js'
@@ -37,12 +37,6 @@ module.exports = {
         loader: 'eslint',
         include: projectRoot,
         exclude: [/node_modules/, /lib/]
-      },
-      {
-        test: /\.js$/,
-        loader:'babel',
-        include: projectRoot,
-        exclude:[/node_modules/, /particles.js/]
       }
     ],
     loaders: [
@@ -93,5 +87,12 @@ module.exports = {
   },
   vue: {
     loaders: utils.cssLoaders()
-  }
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('common.js'),
+    new webpack.ProvidePlugin({
+      jQuery: "jquery",
+      $: "jquery"
+    })
+  ]
 }
