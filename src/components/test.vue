@@ -8,6 +8,17 @@
       <p class="errMsg" v-if="errShow">请输入用户名和密码</p>
       <div id="submitInBt" class="submitInBt" @click="login">登陆</div>
     </div>
+    <div class="">
+      上周工作：
+      1、招生展中秋页面的编写
+      2、招生展推荐页面
+      3、芭蕾舞bug修改
+
+      这周写中秋的模板的时候学习了css里的动画是怎么实现的。看完了vuex的文档，写了几个demo，挺有意思。最近在倒腾vue-cli，坑很多，刚刚还遇到一个，平时jQ的ajax在发送前都会对请求数据序列化，用了vue-resource结果是直接发的ajax对象，眼睛太瞎最后才在请求里看到不一样。还有第三方插件的导入也是各种小坑，不过模块化太诱人，学习成本总是有的。每天看道算法题，活动活动脑子。刚开始看《世说新语》，其实看的是《世说新语笺梳》，读起来很吃力，魏晋的文言加上后面的笺和梳，脑细胞已死完。
+
+      下周工作：
+      1、继续修改ballet页面
+    </div>
   </div>
 </template>
 
@@ -17,7 +28,6 @@ import $ from 'jquery'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
-Vue.http.options.emulateJSON = true
 particlesJS.load('particles-js', 'static/libs/particles.json', function () {
   console.log('callback - particles.js config loaded')
 })
@@ -35,36 +45,20 @@ export default {
   },
   methods: {
     login () {
-      var that = this
       console.log('username', this.username)
       console.log('password', this.password)
       if (this.username === '' || this.password === '') {
         this.errShow = true
       } else {
-        // $.ajax({
-        //   url: '/ballet/api/oa/login/',
-        //   type: 'POST',
-        //   dataType: 'json',
-        //   data: {
-        //     username: that.username,
-        //     password: that.password
-        //   },
-        //   success: function (result) {
-        //     console.log(result)
-        //   },
-        //   error: function (result) {
-        //     console.log(result)
-        //   }
-        // })
         this.errShow = false
-        this.$http.post(
-          '/ballet/api/oa/login/',
+        Vue.$http.post(
+          'http://crm.yunyuer.com/ballet/api/oa/login/',
           {
-            username: that.username,
-            password: that.password
+            username: this.usernamee,
+            password: this.password
           }
         ).then((response) => {
-          console.log(response.body)
+          console.log(response)
         })
       }
     }
