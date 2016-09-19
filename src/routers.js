@@ -13,6 +13,10 @@ export default (router) => router.map({
     name: 'login',
     component: require('./components/Login')
   },
+  '/index': {
+    name: 'index',
+    component: require('./components/Index')
+  },
   '/': {
     name: 'root',
     component: require('./components/Login')

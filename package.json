@@ -70,6 +70,7 @@
     "vue-loader": "^8.3.0",
     "vue-resource": "^1.0.0",
     "vue-router": "^0.7.13",
+    "vue-strap": "^1.1.20",
     "vue-style-loader": "^1.0.0",
     "vue-validator": "^2.1.7",
     "vuex": "^1.0.0-rc.2",

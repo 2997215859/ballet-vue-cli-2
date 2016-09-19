@@ -13,18 +13,14 @@
 
 <script>
 import particlesJS from '../libs/particles.js'
-import $ from 'jquery'
-import Vue from 'vue'
-import VueResource from 'vue-resource'
-Vue.use(VueResource)
-Vue.http.options.emulateJSON = true
+// import $ from 'jquery'
 particlesJS.load('particles-js', 'static/libs/particles.json', function () {
   console.log('callback - particles.js config loaded')
 })
 var num = parseInt(Math.random() * 4 + 1)
 export default {
   ready () {
-    $('#particles-js').css('background-image', 'url(static/images/balletBg' + num + '.jpg)')
+    window.$('#particles-js').css('background-image', 'url(static/images/balletBg' + num + '.jpg)')
   },
   data () {
     return {
@@ -35,36 +31,28 @@ export default {
   },
   methods: {
     login () {
-      var that = this
       console.log('username', this.username)
       console.log('password', this.password)
       if (this.username === '' || this.password === '') {
         this.errShow = true
       } else {
-        // $.ajax({
-        //   url: '/ballet/api/oa/login/',
-        //   type: 'POST',
-        //   dataType: 'json',
-        //   data: {
-        //     username: that.username,
-        //     password: that.password
-        //   },
-        //   success: function (result) {
-        //     console.log(result)
-        //   },
-        //   error: function (result) {
-        //     console.log(result)
-        //   }
-        // })
         this.errShow = false
         this.$http.post(
           '/ballet/api/oa/login/',
           {
-            username: that.username,
-            password: that.password
+            username: window.$.trim(this.username),
+            password: window.$.trim(this.password)
           }
         ).then((response) => {
-          console.log(response.body)
+          console.log(response.ok)
+          return response.json()
+        }).then((res) => {
+          console.log(res)
+          if (res.ret === '1') {
+            window.localStorage.setItem('username', window.$.trim(this.username))
+            window.localStorage.setItem('password', window.$.trim(this.password))
+            this.$router.go('/index')
+          }
         })
       }
     }
