@@ -1,0 +1,9 @@
+body{height: 100%;overflow-y: hidden;overflow-x: auto;position: relative;}
+.setTd>span{cursor: pointer;color: #347ab6;}
+.my-table{width: 95%;max-width: 100%;margin:15px auto;border-collapse: collapse;border-spacing: 0;}
+.my-table{font-size:14px;}
+.my-table th,td{text-align:center;margin:0;padding:0;border:0;outline:0;background:transparent;}
+.my-table tr:first-child{background-color:#f6f8fa;}
+.mytable > tbody > tr:hover{background:#EAF3FD;}
+.mytable > tbody > tr:first-child:hover{background:#f6f8fa;}
+.my-table > thead > tr > th, .my-table > tbody > tr > th, .my-table > tfoot > tr > th, .table > thead > tr > td, .my-table > tbody > tr > td, .table > tfoot > tr > td{padding:8px;line-height:1.42;vertical-align: top;border-top: 1px solid #ddd;}
