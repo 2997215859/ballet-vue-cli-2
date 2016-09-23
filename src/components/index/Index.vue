@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="my-container animate" id="container" :style="{ left: leftDis + 'px' }">
-    <div class="aside" id="sidebar">
+    <div class="my-aside" id="sidebar">
       <div class="menu">
         <h2><span>吴华芭蕾舞</span></h2>
         <hr class="line-mode">
@@ -22,7 +22,8 @@ export default {
   data () {
     return {
       leftDis: 0,
-      isFold: false
+      isFold: false,
+      modalIsOpen: false
     }
   },
   methods: {
@@ -39,7 +40,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .my-container{
   position: absolute;
   top:0px;
@@ -51,7 +52,7 @@ export default {
 .my-container.animate{
   transition: left 0.3s;
 }
-.aside{
+.my-aside{
   position: relative;
   width: 199px;
   background-color: #f0f6f6;
@@ -64,7 +65,7 @@ export default {
   position: relative;
   height: 100%;
 }
-.aside .menu h2{
+.my-aside .menu h2{
   font-size: 22px;
   font-weight: 400;
   line-height: 62px;
@@ -124,7 +125,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.aside .btn-fold-menu{
+.my-aside .btn-fold-menu{
   position:absolute;
   top:21px;
   right:-1px;
@@ -142,5 +143,8 @@ export default {
   border: 1px solid #c7e0ef;
   border-left: none;
   background: url(../../assets/images/top-menu.png) -87px -40px no-repeat #f0f6f6;
+}
+h4{
+  font-size: 18px;
 }
 </style>

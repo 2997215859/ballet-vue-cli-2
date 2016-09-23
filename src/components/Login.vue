@@ -91,7 +91,7 @@ canvas{
   top:20%;
   left:50%;
   margin-left:-190px;
-  width:300px;
+  width:380px;
   color:#fff;
   text-align:center;
   background-color:rgba(50,50,50,0.6);
@@ -105,6 +105,7 @@ canvas{
   margin-bottom:20px;
 }
 .loginDiv input{
+  color: #000;
   width:300px;
   display:block;
   background-color:rgba(255, 255, 255, 0.95);
