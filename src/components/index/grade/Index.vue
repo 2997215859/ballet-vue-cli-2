@@ -1,6 +1,5 @@
 <template lang="html">
   <div>
-    <button type="button" name="button" @click="modalIsOpen = true">modal</button>
     <button class="btn btn-default btn-primary my-btn" type="button" name="button" @click="addGrade">添加年级</button>
     <table class="my-table">
       <tr>
@@ -14,54 +13,48 @@
         <td>{{ item.grade_price }}</td>
         <td>{{ item.grade_sum }}</td>
         <td class="setTd">
-          <span @click="">修改</span>
-          <span @click="">删除</span>
+          <span @click="changeGrade(item.grade_id, item.grade_title, item.grade_price, item.grade_sum)">修改</span>
+          <span @click="delGrade(item.grade_id)">删除</span>
         </td>
       </tr>
     </table>
-    <modal title="Zoom Modal" effect="zoom" :show.sync="modalIsOpen">
-      <div slot="modal-header" class="modal-header">
-        <h4 class="modal-title">
-          <i>Custom</i> <code>Modal</code><b>Title</b>
-        </h4>
-      </div>
-      <div slot="modal-body" class="modal-body">
-        <h4>hello world</h4>
-      </div>
-      <div slot="modal-footer" class="modal-footer">
-        <button type="button" name="button" class="btn btn-default" @click="modalIsOpen = false">Exit</button>
-        <button type="button" name="button" class="btn btn-success" @click="modalIsOpen = false">Save</button>
-      </div>
-    </modal>
+    <Grademodal v-ref:modal><Grademodal>
   </div>
 </template>
 <script>
-import { modal } from 'vue-strap'
+import Grademodal from './Modal.vue'
+import ajax from '../../../assets/js/ajax.js'
 export default {
   data () {
     return {
-      singlePageData: [],
-      modalIsOpen: false
+      singlePageData: []
     }
   },
   methods: {
-    addGrade: () => {}
+    addGrade () {
+      console.log(this)
+      this.$refs.modal.showModal()
+    },
+    getGradeList () {
+      ajax.post(
+        '/ballet/api/oa/select_list/', {}, {}
+      ).then(
+        (res) => {
+          console.log('success', res)
+          this.singlePageData = res.data.grade_list
+        },
+        (res) => {
+          console.log('error', res)
+          window.alert(res.err_msg)
+        }
+      )
+    }
   },
   ready () {
-    this.$http.post(
-      '/ballet/api/oa/select_list/'
-    ).then((response) => {
-      console.log(response.ok)
-      return response.json()
-    }).then((res) => {
-      console.log(res)
-      if (res.ret === '1') {
-        this.singlePageData = res.data.grade_list
-      }
-    })
+    this.getGradeList()
   },
   components: {
-    modal
+    Grademodal
   }
 }
 </script>

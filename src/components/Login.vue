@@ -37,23 +37,9 @@ export default {
         this.errShow = true
       } else {
         this.errShow = false
-        this.$http.post(
-          '/ballet/api/oa/login/',
-          {
-            username: window.$.trim(this.username),
-            password: window.$.trim(this.password)
-          }
-        ).then((response) => {
-          console.log(response.ok)
-          return response.json()
-        }).then((res) => {
-          console.log(res)
-          if (res.ret === '1') {
-            window.localStorage.setItem('username', window.$.trim(this.username))
-            window.localStorage.setItem('password', window.$.trim(this.password))
-            this.$router.go('/index')
-          }
-        })
+        window.localStorage.setItem('username', window.$.trim(this.username))
+        window.localStorage.setItem('password', window.$.trim(this.password))
+        this.$router.go('/index/gradeSet')
       }
     }
   }

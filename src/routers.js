@@ -10,15 +10,15 @@ export default (router) => router.map({
     subRoutes: {
       '/gradeSet': {
         name: 'gradeSet',
-        component: require('./components/index/GradeSet')
+        component: require('./components/index/grade/Index.vue')
       },
       '/classSet': {
         name: 'classSet',
-        component: require('./components/index/ClassSet')
+        component: require('./components/index/class/Index.vue')
       },
       '/memCenter': {
         name: 'memCenter',
-        component: require('./components/index/MemCenter')
+        component: require('./components/index/mem/Index.vue')
       }
     }
   },
