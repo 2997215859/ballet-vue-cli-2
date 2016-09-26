@@ -96,6 +96,9 @@ export default {
     },
     changeGrade () {
       console.log('type = ', this.gradeFormOuterInfo.type)
+      if (!this.$refs.gradeForm.checkForm()) { return }
+      console.log('验证通过')
+      this.$refs.gradeModal.closeModal()
       ajax.post(
         '/ballet/api/oa/grade_up/',
         {

@@ -36,7 +36,6 @@ export default {
     },
     submitInfo () {
       this.$dispatch('operations')
-      this.modalIsOpen = false
     }
   }
 }
