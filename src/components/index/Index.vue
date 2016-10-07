@@ -6,8 +6,35 @@
         <hr class="line-mode">
         <dl class="menu-list">
           <dd><a v-link="{ path : '/index/gradeSet', activeClass: 'active' }">年级设置</a></dd>
-          <dd><a v-link="{ path : '/index/classSet', activeClass: 'active'}">班级设置</a></dd>
-          <dd><a v-link="{ path : '/index/memCenter', activeClass: 'active'}">会员中心</a></dd>
+          <dd><a v-link="{ path : '/index/classSet', activeClass: 'active' }">班级设置</a></dd>
+          <dd :class="isSysTitleActive ? 'active': ''">
+            <a @click="isSysListShowFun">系统设置</a>
+            <ul class="menu-sub" v-show="isSysListShow">
+              <li>
+                <a v-link="{ path: '/index/sysSet/gradeSet', activeClass:'active'}">
+                  <i class="ico-dot"></i>
+                  <span>年级设置</span>
+                </a>
+              </li>
+              <li>
+                <a v-link="{ path: '/index/sysSet/classSet', activeClass:'active'}">
+                  <i class="ico-dot"></i>
+                  <span>班级设置</span>
+                </a>
+              </li>
+            </ul>
+          </dd>
+          <dd :class="isShowMemTitlePath? 'active': ''">
+            <a @click="isShowMemTitlePath = !isShowMemTitlePath">会员设置</a>
+            <ul class="menu-sub" v-show="isShowMemTitlePath">
+              <li>
+                <a v-link="{ path: '/index/memMan/memCenter', activeClass:'active'}">
+                  <i class="ico-dot"></i>
+                  <span>会员中心</span>
+                </a>
+              </li>
+            </ul>
+          </dd>
         </dl>
       </div>
       <a href="javascript:void(0)" @click="toggleSidebar" class="btn-fold-menu" :class="[ isFold ? 'retract' : '']" title="fold"></a>
@@ -23,7 +50,11 @@ export default {
     return {
       leftDis: 0,
       isFold: false,
-      modalIsOpen: false
+      modalIsOpen: false,
+      isSysHavaRoute: false,
+      isSysTitleActive: false,
+      isSysListShow: false,
+      isShowMemTitlePath: false
     }
   },
   methods: {
@@ -35,6 +66,41 @@ export default {
         this.leftDis = 0
         this.isFold = false
       }
+    },
+    isSysListShowFun: function () {
+      this.isSysListShow = !this.isSysListShow
+      if (this.isSysHavaRoute === true) {
+        this.isSysTitleActive = true
+      } else {
+        this.isSysTitleActive = this.isSysListShow
+      }
+    }
+  },
+  route: {
+    data: function (transition) {
+      let that = this
+      transition.next({
+        isSysTitleActive: (function () {
+          if (transition.to.path.slice(0, 13) === '/index/sysSet') {
+            that.isSysHavaRoute = true
+            return true
+          } else {
+            that.isSysHavaRoute = false
+            if (that.isSysListShow === true) {
+              return true
+            } else {
+              return false
+            }
+          }
+        })(),
+        isShowMemTitlePath: (function () {
+          console.log(transition.to.path.slice(0, 13))
+          if (transition.to.path.slice(0, 13) === '/index/memMan') {
+            return true
+          }
+          return false
+        })()
+      })
     }
   }
 }
@@ -115,6 +181,10 @@ export default {
   color: #2277da;
   background-color: #d5e2ef;
 }
+.menu-list dd.active{
+  color: #2277da;
+  background-color: #d5e2ef;
+}
 .main{
   position: absolute;
   top: 0px;
@@ -146,5 +216,27 @@ export default {
 }
 h4{
   font-size: 18px;
+}
+.menu-list .menu-sub{
+  display: block;
+}
+.menu-list dd ul.menu-sub li a i.ico-dot{
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 14px 0 2px;
+  vertical-align: middle;
+  border-radius: 5px;
+  background: #b2becd;
+}
+.menu-list dd.active ul.menu-sub li a.active i.ico-dot{
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 14px 0 2px;
+  background-color: inherit;
+  background: url(../../assets/images/top-menu.png);
+  background-position: 0 -77px;
+  /*background: #b2becd;*/
 }
 </style>

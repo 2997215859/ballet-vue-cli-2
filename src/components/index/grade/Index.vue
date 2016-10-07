@@ -73,71 +73,9 @@ export default {
         }
       )
     },
-    addGrade () {
-      // console.log('gradeForm', this.$refs.gradeForm.)
-      ajax.post(
-        '/ballet/api/oa/grade_add/',
-        {
-          title: this.$refs.gradeForm.gradeFormInfo.grade_title,
-          price: this.$refs.gradeForm.gradeFormInfo.grade_price,
-          sum: this.$refs.gradeForm.gradeFormInfo.grade_sum
-        },
-        {}
-      ).then(
-        (res) => {
-          console.log('success', res)
-          this.getGradeList()
-        },
-        (res) => {
-          console.log('error', res)
-          window.alert(res.err_msg)
-        }
-      )
-    },
-    changeGrade () {
+    operate (url, data, suc, fail) {
       console.log('type = ', this.gradeFormOuterInfo.type)
-      if (!this.$refs.gradeForm.checkForm()) { return }
-      console.log('验证通过')
-      this.$refs.gradeModal.closeModal()
-      ajax.post(
-        '/ballet/api/oa/grade_up/',
-        {
-          grade_id: this.$refs.gradeForm.gradeFormInfo.grade_id,
-          title: this.$refs.gradeForm.gradeFormInfo.grade_title,
-          price: this.$refs.gradeForm.gradeFormInfo.grade_price,
-          sum: this.$refs.gradeForm.gradeFormInfo.grade_sum
-        },
-        {}
-      ).then(
-        (res) => {
-          console.log('success', res)
-          this.getGradeList()
-        },
-        (res) => {
-          console.log('error', res)
-          window.alert(res.err_msg)
-        }
-      )
-    },
-    delGrade () {
-      console.log('type = ', this.gradeFormOuterInfo.type)
-      ajax.post(
-        '/ballet/api/oa/grade_up/',
-        {
-          grade_id: this.$refs.gradeForm.gradeFormInfo.grade_id,
-          idel: 1
-        },
-        {}
-      ).then(
-        (res) => {
-          console.log('success', res)
-          this.getGradeList()
-        },
-        (res) => {
-          console.log('error', res)
-          window.alert(res.err_msg)
-        }
-      )
+      ajax.post(url, data, {}).then(suc, fail)
     }
   },
   ready () {
@@ -145,17 +83,60 @@ export default {
   },
   events: {
     'operations' () {
-      console.log(this.gradeFormOuterInfo.type)
+      console.log('type = ', this.gradeFormOuterInfo.type)
+      let that = this
       // 这个事件的名字是从该组件传到modal组件里去的，应该和slot的名字一样
+      if (!this.$refs.gradeForm.checkForm()) { return }
+      console.log('验证通过')
+      this.$refs.gradeModal.closeModal()
       switch (this.gradeFormOuterInfo.type) {
         case 'addGrade':
-          this.addGrade()
+          this.operate(
+            '/ballet/api/oa/grade_add/',
+            {
+              title: this.$refs.gradeForm.gradeFormInfo.grade_title,
+              price: this.$refs.gradeForm.gradeFormInfo.grade_price,
+              sum: this.$refs.gradeForm.gradeFormInfo.grade_sum
+            },
+            function (res) {
+              that.getGradeList()
+            },
+            function (res) {
+              window.alert(res.err_msg)
+            }
+          )
           break
         case 'changeGrade':
-          this.changeGrade()
+          this.operate(
+            '/ballet/api/oa/grade_up/',
+            {
+              grade_id: this.$refs.gradeForm.gradeFormInfo.grade_id,
+              title: this.$refs.gradeForm.gradeFormInfo.grade_title,
+              price: this.$refs.gradeForm.gradeFormInfo.grade_price,
+              sum: this.$refs.gradeForm.gradeFormInfo.grade_sum
+            },
+            function (res) {
+              that.getGradeList()
+            },
+            function (res) {
+              window.alert(res.err_msg)
+            }
+          )
           break
         case 'delGrade':
-          this.delGrade()
+          this.operate(
+            '/ballet/api/oa/grade_up/',
+            {
+              grade_id: this.$refs.gradeForm.gradeFormInfo.grade_id,
+              idel: 1
+            },
+            function (res) {
+              that.getGradeList()
+            },
+            function (res) {
+              window.alert(res.err_msg)
+            }
+          )
       }
     }
   },
