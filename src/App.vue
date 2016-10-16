@@ -4,14 +4,22 @@
       <router-view><router-view>
     </div>
     <loading v-if="showLoading"></loading>
+    <my-aside>
+      <p slot="">还未有赋值</p>
+      <attendance-detail slot='attendanceDetail'></attendance-detail>
+    </my-aside>
   </div>
 </template>
 <script>
+import myAside from './components/public/Aside.vue'
+import attendanceDetail from './components/index/class/AttendanceDetail.vue'
 import loading from './components/Loading.vue'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import store from './vuex/store.js'
 Vue.use(VueResource)
 export default {
+  store,
   replace: false,
   data () {
     return {
@@ -30,7 +38,9 @@ export default {
     })
   },
   components: {
-    loading
+    loading,
+    myAside,
+    attendanceDetail
   }
 }
 

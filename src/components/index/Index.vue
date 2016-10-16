@@ -6,10 +6,9 @@
         <hr class="line-mode">
         <dl class="menu-list">
           <dd><a v-link="{ path : '/index/gradeSet', activeClass: 'active' }">年级设置</a></dd>
-          <dd><a v-link="{ path : '/index/classSet', activeClass: 'active' }">班级设置</a></dd>
           <dd :class="isSysTitleActive ? 'active': ''">
-            <a @click="isSysListShowFun">系统设置</a>
-            <ul class="menu-sub" v-show="isSysListShow">
+            <a @click="isSysTitleActive = !isSysTitleActive">系统设置</a>
+            <ul class="menu-sub" v-show="isSysTitleActive">
               <li>
                 <a v-link="{ path: '/index/sysSet/gradeSet', activeClass:'active'}">
                   <i class="ico-dot"></i>
@@ -45,15 +44,14 @@
   </div>
 </template>
 <script>
+import { navIsFoldFun } from '../../vuex/actions.js'
 export default {
   data () {
     return {
       leftDis: 0,
       isFold: false,
       modalIsOpen: false,
-      isSysHavaRoute: false,
       isSysTitleActive: false,
-      isSysListShow: false,
       isShowMemTitlePath: false
     }
   },
@@ -66,32 +64,17 @@ export default {
         this.leftDis = 0
         this.isFold = false
       }
-    },
-    isSysListShowFun: function () {
-      this.isSysListShow = !this.isSysListShow
-      if (this.isSysHavaRoute === true) {
-        this.isSysTitleActive = true
-      } else {
-        this.isSysTitleActive = this.isSysListShow
-      }
+      this.navIsFoldFun(this.isFold)
     }
   },
   route: {
     data: function (transition) {
-      let that = this
       transition.next({
         isSysTitleActive: (function () {
           if (transition.to.path.slice(0, 13) === '/index/sysSet') {
-            that.isSysHavaRoute = true
             return true
-          } else {
-            that.isSysHavaRoute = false
-            if (that.isSysListShow === true) {
-              return true
-            } else {
-              return false
-            }
           }
+          return false
         })(),
         isShowMemTitlePath: (function () {
           console.log(transition.to.path.slice(0, 13))
@@ -101,6 +84,11 @@ export default {
           return false
         })()
       })
+    }
+  },
+  vuex: {
+    actions: {
+      navIsFoldFun
     }
   }
 }

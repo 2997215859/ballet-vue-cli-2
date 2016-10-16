@@ -39,7 +39,7 @@ export default {
         this.errShow = false
         window.localStorage.setItem('username', window.$.trim(this.username))
         window.localStorage.setItem('password', window.$.trim(this.password))
-        this.$router.go('/index/gradeSet')
+        this.$router.go('/index/sysSet/gradeSet')
       }
     }
   }

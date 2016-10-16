@@ -4,3 +4,13 @@
 export function getCount (state) {
   return state.count
 }
+export function getAsideIsOpen (state) {
+  return state.asideIsOpen
+}
+export function getNavIsFold (state) {
+  return state.navIsFold
+}
+export function getAsideName (state) {
+  // console.log('getAsideName', state.asideName)
+  return state.asideName
+}

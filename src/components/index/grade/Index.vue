@@ -14,7 +14,7 @@
         <td>{{ item.grade_sum }}</td>
         <td class="setTd">
           <span @click="showModal('changeGrade', item)">修改</span>
-          <span @click="showModal('delGrade', item)">删除</span>
+          <span @click="showModal('del', item)">删除</span>
         </td>
       </tr>
     </table>
@@ -52,7 +52,7 @@ export default {
       this.$refs.gradeModal.showModal()
       this.gradeFormOuterInfo.type = type
       this.gradeFormInnerInfo = this.deepCopy(item)
-      if (type === 'delGrade') {
+      if (type === 'del') {
         console.log('delete')
         this.gradeFormInnerInfo.isShowDelTpl = true
       } else {
